@@ -3,7 +3,8 @@ pipeline
 
 	environment {
 		APP = './greatPomelo'
-		DIR_VALGRIND = '$WORKSPACE/valgrind'
+		DIR_VALGRIND = 'valgrind'
+		DIR_BUILD = "$WORKSPACE"
 		SERVER_ID = 'dockeroo'
 	}
 
