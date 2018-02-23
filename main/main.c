@@ -6,5 +6,5 @@ int main()
 	//this is the main function
 	//printf("\n%d\n",dosomethingfoo(2));
 
-	return (EXIT_SUCCESS);
+	return 0;
 }
