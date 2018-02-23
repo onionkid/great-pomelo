@@ -187,7 +187,7 @@ pipeline
 				def server = Artifactory.server $SERVER_ID
 
 				// Read the upload spec which was downloaded from github.
-				def uploadSpec = """{"files": [{"pattern": "*.a, greatPomelo","target": $WORKSPACE}]}"""
+				def uploadSpec = "{"files": [{"pattern": "*.a, greatPomelo","target": $WORKSPACE}]}"
 				
 				// Upload to Artifactory.
 				def buildInfo1 = server.upload spec: uploadSpec
