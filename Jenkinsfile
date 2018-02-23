@@ -4,7 +4,6 @@ pipeline
 	environment {
 		APP = './greatPomelo'
 		DIR_VALGRIND = '$WORKSPACE/valgrind'
-		DIR_BUILD = $WORKSPACE
 		SERVER_ID = 'dockeroo'
 	}
 
@@ -68,7 +67,7 @@ pipeline
 				    steps {
 				    	sh returnStdout: false, script:
 						'''
-						cd $DIR_BUILD
+						cd $WORKSPACE
 						valgrind --tool=memcheck \
 						--xml=yes \
 						--xml-file=$DIR_VALGRIND/memcheck.xml \
@@ -82,7 +81,7 @@ pipeline
 					steps {
 						sh returnStdout: false, script: 
 						'''
-						cd $DIR_BUILD
+						cd $WORKSPACE
 						valgrind --tool=helgrind \
 						--xml=yes \
 						--xml-file=$DIR_VALGRIND/helgrind.xml \
@@ -96,7 +95,7 @@ pipeline
 					steps {
 						sh returnStdout: false, script: 
 						'''
-						cd $DIR_BUILD
+						cd $WORKSPACE
 						valgrind --tool=drd \
 						--xml=yes \
 						--xml-file=$DIR_VALGRIND/drd.xml \
@@ -110,7 +109,7 @@ pipeline
 					steps {
 						sh returnStdout: false, script: 
 						'''
-						cd $DIR_BUILD
+						cd $WORKSPACE
 						valgrind --tool=cachegrind \
 						--cachegrind-out-file=$DIR_VALGRIND/cachegrind.txt \
 						--log-file=$DIR_VALGRIND/cachegrind.log \
@@ -123,7 +122,7 @@ pipeline
 					steps {
 						sh returnStdout: false, script: 
 						'''
-						cd $DIR_BUILD
+						cd $WORKSPACE
 						valgrind --tool=callgrind \
 						--callgrind-out-file=$DIR_VALGRIND/callgrind.txt \
 						--log-file=$DIR_VALGRIND/callgrind.log \
@@ -149,7 +148,7 @@ pipeline
 					steps {
 						sh returnStdout: false, script: 
 						'''
-						cd $DIR_BUILD
+						cd $WORKSPACE
 						valgrind --tool=lackey \
 						--log-file=$DIR_VALGRIND/lackey.log \
 						$APP
