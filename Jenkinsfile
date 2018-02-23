@@ -183,7 +183,8 @@ pipeline
 				archiveArtifacts artifacts: 'greatPomelo', fingerprint: true, onlyIfSuccessful: true
 				archiveArtifacts artifacts: 'libfoo.a', fingerprint: true, onlyIfSuccessful: true
 				
-				// Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+				node
+				{// Obtain an Artifactory server instance, defined in Jenkins --> Manage:
 				def server = Artifactory.server $SERVER_ID
 
 				// Read the upload spec which was downloaded from github.
@@ -201,7 +202,7 @@ pipeline
 
 				// Publish the build to Artifactory
 				server.publishBuildInfo buildInfo1
-				
+				}
         	}
         }
     }
