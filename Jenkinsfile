@@ -56,6 +56,7 @@ pipeline
         		sh returnStdout: false, script: 
         		'''
         		cd $WORKSPACE
+				rm -rf valgrind
         		mkdir valgrind
         		'''
         	}
