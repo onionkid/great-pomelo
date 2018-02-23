@@ -73,26 +73,22 @@ pipeline
 				archiveArtifacts artifacts: 'greatPomelo', fingerprint: true, onlyIfSuccessful: true
 				archiveArtifacts artifacts: 'libfoo.a', fingerprint: true, onlyIfSuccessful: true
 				
-				script
-				{
-					// Obtain an Artifactory server instance, defined in Jenkins --> Manage:
-					def server = Artifactory.server $SERVER_ID
+				script {
+					def server = Artifactory.server 'dockeroo'
+					def uploadSpec = '''{
+					  "files": [
+						{
+						  "pattern": "libfoo*.a",
+						  "target": "generic-local/libfoo/"
+						},
+						{
+						  "pattern": "greatPomelo",
+						  "target": "generic-local/greatPomelo/"
+						}
 
-					// Read the upload spec which was downloaded from github.
-					def uploadSpec = "{"files": [{"pattern": "*.a","target": $WORKSPACE},{"pattern": $APP,"target": $WORKSPACE}]}"
-					
-					// Upload to Artifactory.
-					def buildInfo1 = server.upload spec: uploadSpec
-
-					// Read the upload spec and upload files to Artifactory.
-					def downloadSpec;
-					def buildInfo2 = server.download spec: downloadSpec
-
-					// Merge the upload and download build-info objects.
-					buildInfo1.append buildInfo2
-
-					// Publish the build to Artifactory
-					server.publishBuildInfo buildInfo1
+					 ]
+					}'''
+					server.upload(uploadSpec)
 				}
         	}
         }
