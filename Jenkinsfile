@@ -2,10 +2,10 @@ pipeline
 {
 
 	environment {
-		//DIR_SRC = '/root/cmake/src'
-		//DIR_BUILD = '/root/cmake/build'
 		APP = './greatPomelo'
 		DIR_VALGRIND = '$WORKSPACE/valgrind'
+		DIR_BUILD = '$WORKSPACE'
+		$SERVER_ID = 'dockeroo'
 	}
 
 	agent {
@@ -157,15 +157,59 @@ pipeline
 				}
 			}
 
-			post {
+			/*post {
 				success {
 					sh returnStdout: false, script: 
 					'''
-					pwd
+					cd $WORKSPACE
+					
 					'''
+					archiveArtifacts artifacts: 'greatPomelo', fingerprint: true, onlyIfSuccessful: true
+					archiveArtifacts artifacts: 'libfoo.a', fingerprint: true, onlyIfSuccessful: true
+					
 					//artifactoryUpload spec: "spec", buildInfo: "buildinfo", server: 'dockeroo'
 				}
-			}
+			}*/
 		}
+		
+		stage('Archive Artifacts')
+        {
+        	steps {
+        		sh returnStdout: false, script: 
+        		'''
+        		cd $WORKSPACE
+        		'''
+				
+				archiveArtifacts artifacts: 'greatPomelo', fingerprint: true, onlyIfSuccessful: true
+				archiveArtifacts artifacts: 'libfoo.a', fingerprint: true, onlyIfSuccessful: true
+				
+				// Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+				def server = Artifactory.server $SERVER_ID
+
+				// Read the upload spec which was downloaded from github.
+				def uploadSpec = """{
+					  "files": [
+						{
+						  "pattern": "*.a, greatPomelo",
+						  "target": $WORKSPACE
+						}
+					 ]
+					}"""
+				
+				// Upload to Artifactory.
+				def buildInfo1 = server.upload spec: uploadSpec
+
+				// Read the upload spec and upload files to Artifactory.
+				def downloadSpec;
+				def buildInfo2 = server.download spec: downloadSpec
+
+				// Merge the upload and download build-info objects.
+				buildInfo1.append buildInfo2
+
+				// Publish the build to Artifactory
+				server.publishBuildInfo buildInfo1
+				
+        	}
+        }
     }
 }
