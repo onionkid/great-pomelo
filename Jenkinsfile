@@ -5,7 +5,7 @@ pipeline
 		//DIR_SRC = '/root/cmake/src'
 		//DIR_BUILD = '/root/cmake/build'
 		APP = './greatPomelo'
-		DIR_VALGRIND = $WORKSPACE/valgrind'
+		DIR_VALGRIND = '$WORKSPACE/valgrind'
 	}
 
 	agent {
