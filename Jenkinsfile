@@ -55,9 +55,8 @@ pipeline
         	steps {
         		sh returnStdout: false, script: 
         		'''
-        		pwd
-        		tree *
-        		mkdir $DIR_VALGRIND
+        		cd $WORKSPACE
+        		mkdir valgrind
         		'''
         	}
         }
@@ -163,7 +162,6 @@ pipeline
 					sh returnStdout: false, script: 
 					'''
 					pwd
-					tree $WORKSPACE
 					'''
 					//artifactoryUpload spec: "spec", buildInfo: "buildinfo", server: 'dockeroo'
 				}
