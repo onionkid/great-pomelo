@@ -1,6 +1,21 @@
 pipeline 
 {
-    agent any
+
+	environment {
+		DIR_SRC = '/root/cmake/src'
+		DIR_BUILD = '/root/cmake/build'
+		APP = './engk'
+		DIR_VALGRIND = '/root/cmake/tests/valgrind'
+	}
+
+	agent {
+	    docker {
+	        image 'kevincaballerodico/dockeroo:latest'
+	        label 'master'
+	        args '-u root'
+	    }
+	}
+
     stages {
         stage('Checkout'){
             steps {
@@ -10,24 +25,27 @@ pipeline
                 submoduleCfg: [], 
                 userRemoteConfigs: [[credentialsId: 'github-kiboi', 
                 url: 'https://github.com/onionkid/great-pomelo.git']]])
+                
+                sh 'pwd'
             }
         }
+        
         
         stage('Build')
         {
             environment {
 				BUILD_GEN   = 'Unix Makefiles'
 				BUILD_TYPE  = 'Debug'
-				BUILD_CMAKE = '/var/lib/cmake-3.10.2/bin/cmake'
-				BUILD_GMAKE = '/bin/gmake'
 			}
 
 			steps {
+				sh 'pwd'
+			
 				sh returnStdout: false, script:
 				'''
 				cd $WORKSPACE
-				$BUILD_CMAKE --debug-output -G "$BUILD_GEN" -D CMAKE_BUILD_TYPE=$BUILD_TYPE .
-				$BUILD_GMAKE
+				cmake --debug-output -G "$BUILD_GEN" -D CMAKE_BUILD_TYPE=$BUILD_TYPE .
+				gmake
 				'''
 			}
         }
