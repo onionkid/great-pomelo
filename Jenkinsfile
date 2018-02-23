@@ -68,7 +68,6 @@ pipeline
 				    steps {
 				    	sh returnStdout: false, script:
 						'''
-						cd $WORKSPACE
 						valgrind --tool=memcheck \
 						--xml=yes \
 						--xml-file=$DIR_VALGRIND/memcheck.xml \
@@ -82,7 +81,6 @@ pipeline
 					steps {
 						sh returnStdout: false, script: 
 						'''
-						cd $WORKSPACE
 						valgrind --tool=helgrind \
 						--xml=yes \
 						--xml-file=$DIR_VALGRIND/helgrind.xml \
@@ -104,6 +102,7 @@ pipeline
 				
 				archiveArtifacts artifacts: 'greatPomelo', fingerprint: true, onlyIfSuccessful: true
 				archiveArtifacts artifacts: 'libfoo.a', fingerprint: true, onlyIfSuccessful: true
+				archiveArtifacts artifacts: 'libhoot.a', fingerprint: true, onlyIfSuccessful: true
 				
 				script {
 					def server = Artifactory.server 'dockeroo'
@@ -112,6 +111,10 @@ pipeline
 						{
 						  "pattern": "libfoo*.a",
 						  "target": "generic-local/libfoo/"
+						},
+						{
+						  "pattern": "libhoot*.a",
+						  "target": "generic-local/libhoot/"
 						},
 						{
 						  "pattern": "greatPomelo",
@@ -128,8 +131,8 @@ pipeline
 			post{
 				always{
 			
-					emailext body: 'Hello!', recipientProviders: [[$class: 'RequesterRecipientProvider']], subject: 'ASD', to: 'kevinarnado@gmail.com'
-
+					//emailext body: 'Hello!', recipientProviders: [[$class: 'RequesterRecipientProvider']], subject: 'ASD', to: 'kevinarnado@gmail.com'
+                    echo "Job Complete!"
 				}
 			}
 		}
