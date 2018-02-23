@@ -64,7 +64,7 @@ pipeline
         
 		stage('Static Analysis') {
 			parallel {
-				stage('VALGRIND MEMCHECK') {
+				/*stage('VALGRIND MEMCHECK') {
 				    steps {
 				    	sh returnStdout: false, script:
 						'''
@@ -78,7 +78,7 @@ pipeline
 				    }
 		    	}
 
-				/*stage('VALGRIND HELGRIND') {
+				stage('VALGRIND HELGRIND') {
 					steps {
 						sh returnStdout: false, script: 
 						'''
