@@ -55,6 +55,8 @@ pipeline
         	steps {
         		sh returnStdout: false, script: 
         		'''
+        		pwd
+        		tree *
         		mkdir $DIR_VALGRIND
         		'''
         	}
