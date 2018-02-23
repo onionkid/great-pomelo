@@ -78,7 +78,7 @@ pipeline
 				    }
 		    	}
 
-				stage('VALGRIND HELGRIND') {
+				/*stage('VALGRIND HELGRIND') {
 					steps {
 						sh returnStdout: false, script: 
 						'''
@@ -155,7 +155,7 @@ pipeline
 						$APP
 						'''
 					}
-				}
+				}*/
 			}
 
 			/*post {
