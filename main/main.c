@@ -4,5 +4,5 @@
 int main()
 {
 	//this is the main function
-	printf("%d",dosomethingfoo(2));
+	printf("\n%d\n",dosomethingfoo(2));
 }

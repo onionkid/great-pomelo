@@ -61,6 +61,38 @@ pipeline
         		'''
         	}
         }
+		
+		stage('Static Analysis') {
+			parallel {
+				stage('VALGRIND MEMCHECK') {
+				    steps {
+				    	sh returnStdout: false, script:
+						'''
+						cd $WORKSPACE
+						valgrind --tool=memcheck \
+						--xml=yes \
+						--xml-file=$DIR_VALGRIND/memcheck.xml \
+						--log-file=$DIR_VALGRIND/memcheck.log \
+						$APP
+						'''
+				    }
+		    	}
+
+				stage('VALGRIND HELGRIND') {
+					steps {
+						sh returnStdout: false, script: 
+						'''
+						cd $WORKSPACE
+						valgrind --tool=helgrind \
+						--xml=yes \
+						--xml-file=$DIR_VALGRIND/helgrind.xml \
+						--log-file=$DIR_VALGRIND/helgrind.log \
+						$APP
+						'''
+					}
+				}
+			}
+		}
         		
 		stage('Archive Artifacts')
         {
@@ -91,6 +123,15 @@ pipeline
 					server.upload(uploadSpec)
 				}
         	}
-        }
+        
+		
+			post{
+				always{
+			
+					emailext body: 'Hello!', recipientProviders: [[$class: 'RequesterRecipientProvider']], subject: 'ASD', to: 'kevinarnado@gmail.com'
+
+				}
+			}
+		}
     }
 }
