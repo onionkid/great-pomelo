@@ -7,11 +7,11 @@ int dosomethingfoo(int x)
 	if(x)
 	{
 		retVal = 1;
-		printf("it is foo true");
+		//printf("it is foo true");
 	}
 	else
 	{
-		printf("it is not foo true");
+		//printf("it is not foo true");
 	}
 
 	return retVal;

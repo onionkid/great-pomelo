@@ -25,11 +25,14 @@ pipeline
                 submoduleCfg: [], 
                 userRemoteConfigs: [[credentialsId: 'github-kiboi', 
                 url: 'https://github.com/onionkid/great-pomelo.git']]])
-                
-                sh 'pwd'
             }
         }
         
+		stage('Prepare Libs'){
+            steps {
+                echo 'Preparing libs for compilation'
+            }
+        }
         
         stage('Build')
         {
@@ -85,6 +88,18 @@ pipeline
 						--xml=yes \
 						--xml-file=$DIR_VALGRIND/helgrind.xml \
 						--log-file=$DIR_VALGRIND/helgrind.log \
+						$APP
+						'''
+					}
+				}
+				
+				stage('VALGRIND CACHEGRIND') {
+					steps {
+						sh returnStdout: false, script: 
+						'''
+						valgrind --tool=cachegrind \
+						--cachegrind-out-file=$DIR_VALGRIND/cachegrind.txt \
+						--log-file=$DIR_VALGRIND/cachegrind.log \
 						$APP
 						'''
 					}

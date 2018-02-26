@@ -7,11 +7,11 @@ int dosomethinghoot(int x)
 	if(x)
 	{
 		retVal = 1;
-		printf("it is hoot true");
+		//printf("it is hoot true");
 	}
 	else
 	{
-		printf("it is not hoot true");
+		//printf("it is not hoot true");
 	}
 
 	return retVal;
