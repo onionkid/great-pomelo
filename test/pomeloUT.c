@@ -1,10 +1,11 @@
-#include "foo.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 
 #include "Automated.h"
+#include "foo.h"
 #include "pomeloUT.h"
 
 /* Suite initialization/cleanup functions */
