@@ -1,12 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
 
-#include
-#include(CTest)
-#include(CPack)
-
-# CMake instructions to make the static lib
-#ADD_LIBRARY(foo STATIC libfoo/foo.c )
-#ADD_LIBRARY(hoot STATIC libhoot/hoot.c )
 
 #CUNIT
 SET(CUNIT_HOME_INCLUDE /usr/local/include/CUnit)

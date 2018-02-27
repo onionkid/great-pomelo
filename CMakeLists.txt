@@ -13,14 +13,33 @@ include_directories(libfoo)
 
 # VAR
 SET(APP_EXE greatPomelo)
-#SET(APP_EXE_TEST greatPomeloTest)
 
 # Configure executable
 ADD_EXECUTABLE(${APP_EXE}  main/main.c libfoo/foo.h libhoot/hoot.h)
-#ADD_EXECUTABLE(${APP_EXE_TEST}  test/mainTest.c libfoo/foo.h libhoot/hoot.h)
 
 # Link the libraries
 TARGET_LINK_LIBRARIES(${APP_EXE} foo hoot)
-#TARGET_LINK_LIBRARIES(${APP_EXE_TEST} foo hoot)
 
-######## TEST
+################################################################
+# UNIT TEST
+################################################################
+#CUNIT
+SET(CUNIT_HOME_INCLUDE /usr/local/include/CUnit)
+SET(CUNIT_HOME_LIB /usr/local/lib)
+
+
+# Include dir
+include_directories(libfoo)
+include_directories(${CUNIT_HOME_INCLUDE})
+
+#Link dir
+link_directories(${CUNIT_HOME_LIB})
+
+# VAR
+SET(APP_EXE_TEST greatPomeloTest)
+
+# Configure executable
+ADD_EXECUTABLE(${APP_EXE_TEST}  test/mainTest.c libfoo/foo.h libhoot/hoot.h (${CUNIT_HOME_INCLUDE}/Automated.h)
+
+# Link the libraries
+TARGET_LINK_LIBRARIES(${APP_EXE_TEST} foo hoot cunit)

@@ -3,6 +3,7 @@ pipeline
 
 	environment {
 		APP = './greatPomelo'
+		APP_TEST = './greatPomeloTest'
 		DIR_VALGRIND = 'valgrind'
 		DIR_BUILD = "$WORKSPACE"
 		SERVER_ID = 'dockeroo'
@@ -10,7 +11,7 @@ pipeline
 
 	agent {
 	    docker {
-	        image 'kevincaballerodico/dockeroo:latest'
+	        image 'kiboi/dockeroo-ut:ver1'
 	        label 'master'
 	        args '-u root'
 	    }
@@ -27,13 +28,7 @@ pipeline
                 url: 'https://github.com/onionkid/great-pomelo.git']]])
             }
         }
-        
-		stage('Prepare Libs'){
-            steps {
-                echo 'Preparing libs for compilation'
-            }
-        }
-        
+               
         stage('Build')
         {
             environment {
@@ -42,8 +37,6 @@ pipeline
 			}
 
 			steps {
-				sh 'pwd'
-			
 				sh returnStdout: false, script:
 				'''
 				cd $WORKSPACE
@@ -51,6 +44,23 @@ pipeline
 				gmake
 				'''
 			}
+        }
+		
+		stage('CUnit'){
+			environment {
+				BUILD_GEN   = 'Unix Makefiles'
+				BUILD_TYPE  = 'Debug'
+			}
+			
+            steps {
+                sh returnStdout: false, script:
+				'''
+				cd $WORKSPACE
+				cmake --debug-output -P CMakeListsTest.txt -G "$BUILD_GEN" -D CMAKE_BUILD_TYPE=$BUILD_TYPE .
+				gmake
+				$APP_TEST
+				'''
+            }
         }
         
         stage('Valgrind Prepare')
