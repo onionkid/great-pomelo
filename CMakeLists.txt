@@ -43,4 +43,4 @@ SET(APP_EXE_TEST greatPomeloTest)
 ADD_EXECUTABLE(${APP_EXE_TEST}  test/mainTest.c test/pomeloUT.h libfoo/foo.h libhoot/hoot.h ${CUNIT_HOME_INCLUDE}/Automated.h )
 
 # Link the libraries
-TARGET_LINK_LIBRARIES(${APP_EXE_TEST} foo hoot cunit-test cunit)
+TARGET_LINK_LIBRARIES(${APP_EXE_TEST} foo hoot cunit cunit-test)
