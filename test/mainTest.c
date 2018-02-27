@@ -8,7 +8,19 @@
 
 int main(int argc, char* argv[])
 {
-  CU_BOOL Run = CU_FALSE ;
+
+	if (CUE_SUCCESS != CU_initialize_registry())
+	      return CU_get_error();
+
+
+	AddTests();
+	CU_set_output_filename("GreatPomeloUT");
+	CU_list_tests_to_file();
+	CU_automated_run_tests();
+	CU_cleanup_registry();
+
+
+  /*CU_BOOL Run = CU_FALSE ;
 
   setvbuf(stdout, NULL, _IONBF, 0);
 
@@ -53,7 +65,7 @@ int main(int argc, char* argv[])
       CU_automated_run_tests();
       CU_cleanup_registry();
     }
-  }
+  }*/
 
   return 0;
 }
