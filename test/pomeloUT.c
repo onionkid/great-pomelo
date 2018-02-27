@@ -7,7 +7,7 @@
 
 #include "Automated.h"
 #include "pomeloUT.h"
-#include "libfoo/foo.h"
+#include "foo.h"
 
 /* Suite initialization/cleanup functions */
 static int suite_success_init(void) { return 0; }
