@@ -13,6 +13,21 @@
 static int suite_success_init(void) { return 0; }
 static int suite_success_clean(void) { return 0; }
 
+/*static int suite_failure_init(void) { return 1;}
+static int suite_failure_clean(void) { return 1; }
+
+static void testSuccess1(void) { CU_ASSERT(1); }
+static void testSuccess2(void) { CU_ASSERT(2); }
+static void testSuccess3(void) { CU_ASSERT(3); }
+
+static void testSuiteFailure1(void) { CU_ASSERT(0); }
+static void testSuiteFailure2(void) { CU_ASSERT(2); }
+
+static void testFailure1(void) { CU_ASSERT(0); }
+static void testFailure2(void) { CU_ASSERT(0); }
+static void testFailure3(void) { CU_ASSERT(0); }
+*/
+
 /** TEST FOO**/
 static void testFoo(void)
 {
@@ -24,6 +39,13 @@ static void testFoo(void)
 	CU_ASSERT_NOT_EQUAL(1,dosomethingfoo(0));
 
 }
+
+////test foo
+static CU_TestInfo tests_foo[] ={
+		{"testFoo",testFoo},
+		CU_TEST_INFO_NULL,
+};
+
 
 static CU_SuiteInfo suites[] = {
   { "suite_test_foo",  suite_success_init, suite_success_clean, NULL, NULL, tests_foo},
