@@ -7,11 +7,12 @@ pipeline
 		DIR_VALGRIND = 'valgrind'
 		DIR_BUILD = "$WORKSPACE"
 		SERVER_ID = 'dockeroo'
+		XMLCONVERT_XSL = '/cunit/cunit-to-junit.xsl'
 	}
 
 	agent {
 	    docker {
-	        image 'kiboi/dockeroo-ut:ver1'
+	        image 'kiboi/dockeroo-ut'
 	        label 'master'
 	        args '-u root'
 	    }
@@ -48,12 +49,32 @@ pipeline
 		
 		stage('CUnit Test')
         {
+			environment {
+				CUNIT_RESULT = 'GreatPomeloUT-Results.xml'
+				CUNIT_RESULT_OUT = 'cunit-result.xml'
+				CUNIT_LISTING = 'GreatPomeloUT-Listing.xml'
+				CUNIT_LISTING_OUT = 'cunit-listing.xml'
+			}
         	steps {
 				sh returnStdout: false, script:
 				'''
 				cd $WORKSPACE
 				$APP_TEST
 				'''
+				
+				echo 'Convert to xUnit compatible xml'
+				sh returnStdout: false, script:
+				'''
+				xsltproc -o $CUNIT_RESULT_OUT $XMLCONVERT_XSL $CUNIT_RESULT
+				xsltproc -o $CUNIT_LISTING_OUT $XMLCONVERT_XSL $CUNIT_LISTING
+				'''
+				
+			}
+			
+			post {
+				always {
+					junit 'cunit-*.xml'
+				}
 			}
         }
 		       

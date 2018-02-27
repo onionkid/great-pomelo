@@ -25,6 +25,18 @@ static void testFailure1(void) { CU_ASSERT(0); }
 static void testFailure2(void) { CU_ASSERT(0); }
 static void testFailure3(void) { CU_ASSERT(0); }
 
+/** TEST FOO**/
+static void testFoo(void)
+{
+	CU_ASSERT_EQUAL(0,dosomethingfoo(0));
+	CU_ASSERT_EQUAL(1,dosomethingfoo(1));
+	CU_ASSERT_EQUAL(1,dosomethingfoo(2));
+	CU_ASSERT_EQUAL(1,dosomethingfoo(3));
+
+	CU_ASSERT_NOT_EQUAL(1,dosomethingfoo(0));
+
+}
+
 /* Test functions for CUnit assertions */
 static void testSimpleAssert(void)
 {
@@ -216,6 +228,12 @@ static void testFatal(void)
   exit(1);
 }
 
+////test foo
+static CU_TestInfo tests_foo[] ={
+		{"testFoo",testFoo},
+		CU_TEST_INFO_NULL,
+};
+
 static CU_TestInfo tests_success[] = {
   { "testSuccess1", testSuccess1 },
   { "testSuccess2", testSuccess2 },
@@ -290,14 +308,14 @@ static CU_TestInfo tests_fatal[] = {
 };
 
 static CU_SuiteInfo suites[] = {
-  { "suite_success_both",  suite_success_init, suite_success_clean, NULL, NULL, tests_success},
+  /*{ "suite_success_both",  suite_success_init, suite_success_clean, NULL, NULL, tests_success},
   { "suite_success_init",  suite_success_init, NULL,                NULL, NULL, tests_success},
   { "suite_success_clean", NULL,               suite_success_clean, NULL, NULL, tests_success},
-  { "test_failure",        NULL,               NULL,                NULL, NULL, tests_failure},
-  { "suite_failure_both",  suite_failure_init, suite_failure_clean, NULL, NULL, tests_suitefailure}, /* tests should not run */
-  { "suite_failure_init",  suite_failure_init, NULL,                NULL, NULL, tests_suitefailure}, /* tests should not run */
-  { "suite_success_but_failure_clean", NULL,   suite_failure_clean, NULL, NULL, tests_suitefailure}, /* tests will run, suite counted as running, but suite tagged as a failure */
-  { "TestSimpleAssert",    NULL,               NULL,                NULL, NULL, tests_simple},
+  { "test_failure",        NULL,               NULL,                NULL, NULL, tests_failure},*/
+  //{ "suite_failure_both",  suite_failure_init, suite_failure_clean, NULL, NULL, tests_suitefailure}, /* tests should not run */
+  //{ "suite_failure_init",  suite_failure_init, NULL,                NULL, NULL, tests_suitefailure}, /* tests should not run */
+  //{ "suite_success_but_failure_clean", NULL,   suite_failure_clean, NULL, NULL, tests_suitefailure}, /* tests will run, suite counted as running, but suite tagged as a failure */
+  /*{ "TestSimpleAssert",    NULL,               NULL,                NULL, NULL, tests_simple},
   { "TestBooleanAssert",   NULL,               NULL,                NULL, NULL, tests_bool},
   { "TestEqualityAssert",  NULL,               NULL,                NULL, NULL, tests_equal},
   { "TestPointerAssert",   NULL,               NULL,                NULL, NULL, tests_ptr},
@@ -305,7 +323,8 @@ static CU_SuiteInfo suites[] = {
   { "TestStringAssert",    NULL,               NULL,                NULL, NULL, tests_string},
   { "TestNStringAssert",   NULL,               NULL,                NULL, NULL, tests_nstring},
   { "TestDoubleAssert",    NULL,               NULL,                NULL, NULL, tests_double},
-  { "TestFatal",           NULL,               NULL,                NULL, NULL, tests_fatal},
+  { "TestFatal",           NULL,               NULL,                NULL, NULL, tests_fatal},*/
+  { "suite_test_foo",  suite_success_init, suite_success_clean, NULL, NULL, tests_foo},
 	CU_SUITE_INFO_NULL,
 };
 
