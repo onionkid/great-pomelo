@@ -4,9 +4,10 @@
 #include <string.h>
 #include <assert.h>
 
+
 #include "Automated.h"
-#include "foo.h"
 #include "pomeloUT.h"
+#include "libfoo/foo.h"
 
 /* Suite initialization/cleanup functions */
 static int suite_success_init(void) { return 0; }
