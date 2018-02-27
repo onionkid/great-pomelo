@@ -39,7 +39,7 @@ link_directories(${CUNIT_HOME_LIB})
 SET(APP_EXE_TEST greatPomeloTest)
 
 # Configure executable
-ADD_EXECUTABLE(${APP_EXE_TEST}  test/mainTest.c libfoo/foo.h libhoot/hoot.h ${CUNIT_HOME_INCLUDE}/Automated.h)
+ADD_EXECUTABLE(${APP_EXE_TEST}  test/mainTest.c libfoo/foo.h libhoot/hoot.h ${CUNIT_HOME_INCLUDE}/Automated.h test/pomeloUT.h)
 
 # Link the libraries
 TARGET_LINK_LIBRARIES(${APP_EXE_TEST} foo hoot cunit)
