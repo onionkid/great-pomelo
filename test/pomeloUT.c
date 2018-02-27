@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "Automated.h"
+#include "pomeloUT.h"
 
 /* Suite initialization/cleanup functions */
 static int suite_success_init(void) { return 0; }
