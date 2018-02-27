@@ -45,6 +45,17 @@ pipeline
 				'''
 			}
         }
+		
+		stage('CUnit Test')
+        {
+        	steps {
+				sh returnStdout: false, script:
+				'''
+				cd $WORKSPACE
+				$APP_TEST
+				'''
+			}
+        }
 		       
         stage('Valgrind Prepare')
         {
