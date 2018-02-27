@@ -45,24 +45,7 @@ pipeline
 				'''
 			}
         }
-		
-		stage('CUnit'){
-			environment {
-				BUILD_GEN   = 'Unix Makefiles'
-				BUILD_TYPE  = 'Debug'
-			}
-			
-            steps {
-                sh returnStdout: false, script:
-				'''
-				cd $WORKSPACE
-				cmake --debug-output -P CMakeListsTest.txt -G "$BUILD_GEN" -D CMAKE_BUILD_TYPE=$BUILD_TYPE .
-				gmake
-				$APP_TEST
-				'''
-            }
-        }
-        
+		       
         stage('Valgrind Prepare')
         {
         	steps {
