@@ -40,9 +40,21 @@ static void testFoo(void)
 
 }
 
+static void testFoo2(void)
+{
+	CU_ASSERT_NOT_EQUAL(1,dosomethingfoo(0));
+	CU_ASSERT_NOT_EQUAL(0,dosomethingfoo(1));
+	CU_ASSERT_NOT_EQUAL(0,dosomethingfoo(2));
+	CU_ASSERT_NOT_EQUAL(0,dosomethingfoo(3));
+
+	CU_ASSERT_NOT_EQUAL(0,dosomethingfoo(0));
+
+}
+
 ////test foo
 static CU_TestInfo tests_foo[] ={
 		{"testFoo",testFoo},
+		{"testFoo2",testFoo2},
 		CU_TEST_INFO_NULL,
 };
 
