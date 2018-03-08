@@ -8,7 +8,7 @@
 
 int main(int argc, char* argv[])
 {
-
+	//init reg
 	if (CUE_SUCCESS != CU_initialize_registry())
 	      return CU_get_error();
 
